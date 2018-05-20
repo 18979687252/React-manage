@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
         let p = this.props.form.getFieldsValue().password
         if (n === '123' && p === '123') {
             // 表单的路由处理
-            history.push('/music')
+            history.push('/account')
         } else {
             this.openNotificationWithIcon('info')
         }

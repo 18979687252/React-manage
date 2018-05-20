@@ -2,12 +2,15 @@ import React from 'react'
 import { Layout, Menu, Icon } from 'antd';
 import Contents from './content/contents'
 import {Link} from 'react-router-dom'
+import {homeSliderMenu} from '../../utils/homeSliderMenu'
+import './home.less'
 const { Header, Sider } = Layout;
+const SubMenu = Menu.SubMenu;
 
 export default class Home extends React.Component {
     state = {
         collapsed: false,
-    };
+    }
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -15,27 +18,47 @@ export default class Home extends React.Component {
     }
     render() {
         return (
-            <Layout>
+            <Layout className="content-wrapper">
                 <Sider
-                    trigger={null}
+                    className="content-slider"
                     collapsible
+                    onCollapse={this.toggle}
                     collapsed={this.state.collapsed}>
-                    <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Link to="/music">
-                                <Icon type="video-camera" />
-                                <span>nav 2</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span>nav 3</span>
-                        </Menu.Item>
+                    <div className="logo-wrapper">
+                        <p>LOGO</p>
+                    </div>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['index']}>
+                        {
+                            homeSliderMenu.map((item) => {
+                                if(item.children){
+                                    return (
+                                        <SubMenu key={item.url} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
+                                            {
+                                                item.children.map((subItem) => {
+                                                    return (
+                                                        <Menu.Item key={subItem.url}>
+                                                            <Link to={`/${subItem.url}`}>
+                                                                <Icon type={subItem.icon}/>
+                                                                <span>{subItem.name}</span>
+                                                            </Link>
+                                                        </Menu.Item>
+                                                    )
+                                                })
+                                            }
+                                        </SubMenu>
+                                    )
+                                }else{
+                                    return (
+                                        <Menu.Item key={item.url}>
+                                            <Link to={`/${item.url}`}>
+                                                <Icon type={item.icon} />
+                                                <span>{item.name}</span>
+                                            </Link>
+                                        </Menu.Item>
+                                    )
+                                }
+                            })
+                        }
                     </Menu>
                 </Sider>
                 <Layout>
