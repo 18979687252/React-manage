@@ -1,20 +1,25 @@
 import React from 'react'
 import { Layout, Menu, Icon } from 'antd';
-import Contents from './content/contents'
 import {Link} from 'react-router-dom'
+import Contents from './content/contents'
+import Top from './header/Top'
 import {homeSliderMenu} from '../../utils/homeSliderMenu'
-import './home.less'
+import './container.less'
 const { Header, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
-export default class Home extends React.Component {
+export default class Container extends React.Component {
     state = {
         collapsed: false,
+        current: 'music',
     }
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         });
+    }
+    menuClickHandler = ({ item, key, keyPath }) => {
+       this.setState({current:key})
     }
     render() {
         return (
@@ -27,7 +32,7 @@ export default class Home extends React.Component {
                     <div className="logo-wrapper">
                         <p>LOGO</p>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['index']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.state.current]} onClick={this.menuClickHandler}>
                         {
                             homeSliderMenu.map((item) => {
                                 if(item.children){
@@ -62,13 +67,7 @@ export default class Home extends React.Component {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                            className="trigger"
-                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.toggle}
-                        />
-                    </Header>
+                    <Top toggle={this.toggle} collapsed={this.state.collapsed}></Top>
                     <Contents style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}></Contents>
                 </Layout>
             </Layout>
