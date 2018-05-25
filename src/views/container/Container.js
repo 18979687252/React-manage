@@ -5,7 +5,7 @@ import Contents from './content/contents'
 import Top from './header/Top'
 import {homeSliderMenu} from '../../utils/homeSliderMenu'
 import './container.less'
-const { Header, Sider } = Layout;
+const { Sider } = Layout
 const SubMenu = Menu.SubMenu;
 
 export default class Container extends React.Component {

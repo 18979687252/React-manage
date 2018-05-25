@@ -1,6 +1,6 @@
 export const homeSliderMenu = [
   {
-    name: '首页',
+    name: '音乐',
     url: 'music',
     icon: 'home',
   }, {

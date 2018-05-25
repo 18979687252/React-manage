@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect, Switch, HashRouter} from 'react-router-dom'
+import { Route, Switch, HashRouter} from 'react-router-dom'
 
 //引入组件
 import Login from '../views/login/Login';
