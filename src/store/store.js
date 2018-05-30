@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 
 const enhancer = compose(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk)
 )
 
 export default function configureStore(initialstate) {

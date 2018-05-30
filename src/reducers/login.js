@@ -1,3 +1,4 @@
+//例子
 import { LOGINMODAL_SHOW } from '../actions/login'
 let init={
     display:false

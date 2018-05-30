@@ -12,8 +12,8 @@ export default class Contents extends React.Component {
     return (
       <Content className="content">
           <Switch>
-              <Route path="/music" component={Music} />
-              <Route path="/account" component={Account} />
+              <Route exec path="/index/music" component={Music}/>
+              <Route exec path="/index/account" component={Account}/>
           </Switch>
       </Content>
     )

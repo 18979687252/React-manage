@@ -1,11 +1,11 @@
 export const homeSliderMenu = [
   {
     name: '音乐',
-    url: 'music',
+    url: 'index/music',
     icon: 'home',
   }, {
     name: '账号',
-    url: 'account',
+    url: 'index/account',
     icon: 'bars',
   }, {
     name: '工具模块',

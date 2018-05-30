@@ -1,37 +1,26 @@
 import React from 'react'
-import { Form, Input, Button, notification, Icon } from 'antd'
+import { Form, Input, Button, Checkbox, notification, Icon } from 'antd'
 import createHistory from 'history/createHashHistory'
-
 import './login.less'
-
 const FormItem = Form.Item
 const history = createHistory()
 
 class LoginPage extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
-        let n = this.props.form.getFieldsValue().username
-        let p = this.props.form.getFieldsValue().password
-        if (n === '123' && p === '123') {
+        let username = this.props.form.getFieldsValue().username
+        let password = this.props.form.getFieldsValue().password
+        if (username === '123' && password === '123') {
             // 表单的路由处理
-            history.push('/account')
+            history.push('/index/music')
         } else {
-            this.openNotificationWithIcon('info')
+            notification.open({
+                message: '用户名&密码',
+                description: '都是：123',
+                duration: 2,
+                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+            })
         }
-    }
-
-    // 返回一个弹框对象，提示用户名和密码
-    openNotificationWithIcon = (type) => {
-        notification[type]({
-            message: '用户名&密码',
-            description: '都是：123',
-            duration: 6,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
-        })
-    }
-
-    componentDidMount() {
-        this.openNotificationWithIcon('info')
     }
 
     render() {
@@ -39,24 +28,38 @@ class LoginPage extends React.Component {
         return (
             <div className="loginpagewrap">
                 <div className="box">
-                    <p>Welcome to the ReactSPA</p>
+                    <h1>React全家桶后台管理系统</h1>
                     <div className="loginWrap">
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem>
                                 {getFieldDecorator('username', {
                                     rules: [{ required: true, message: '请输入用户名' }],
                                 })(
-                                    <Input placeholder="Username：123" />
+                                    <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                           placeholder="Username：123" />
                                 )}
                             </FormItem>
                             <FormItem>
                                 {getFieldDecorator('password', {
                                     rules: [{ required: true, message: '请输入密码' }],
                                 })(
-                                    <Input type="password" placeholder="Password：123" />
+                                    <Input  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            type="password" placeholder="Password：123" />
                                 )}
                             </FormItem>
-                            <Button type="primary" htmlType="submit" className="loginBtn">Login</Button>
+                            <FormItem>
+                                {getFieldDecorator('remember', {
+                                    valuePropName: 'checked',
+                                    initialValue: true,
+                                })(
+                                    <Checkbox>记住密码</Checkbox>
+                                )}
+                                <a className="login-form-forgot" href="">忘记密码？</a>
+                                <Button type="primary" htmlType="submit" className="loginBtn">
+                                    登录
+                                </Button>
+                                <a href="">立即注册</a>
+                            </FormItem>
                         </Form>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ const SubMenu = Menu.SubMenu;
 export default class Container extends React.Component {
     state = {
         collapsed: false,
-        current: 'music',
+        current: 'index/music',
     }
     toggle = () => {
         this.setState({
