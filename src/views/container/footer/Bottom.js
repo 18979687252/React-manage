@@ -28,13 +28,8 @@ export default class Bottom extends React.Component {
 
 	render() {
 		return (
-			<Footer className="bottom animated bounceInLeft">
-				<div className="text">
-					<div>
-						<span className="me">© 2017 牧云云</span>
-						<span className="stay">您已在小窝里逗留了 <span className="time">{this.state.timer}</span> 秒</span>
-					</div>
-				</div>
+			<Footer className="bottom">
+				<span className="me">Copyright © 2018 xxxxx有限公司 版权所有 | 沪ICP备xxxxxxx号</span>
 			</Footer>
 		)
 	}

@@ -1,28 +1,19 @@
 import React from 'react'
-import { Form, Input, Button, Checkbox, notification, Icon } from 'antd'
-import createHistory from 'history/createHashHistory'
+import { Form, Input, Button, Checkbox, Icon } from 'antd'
+import {loginHandler} from '../../actions/login'
+import {connect} from 'react-redux'
 import './login.less'
 const FormItem = Form.Item
-const history = createHistory()
 
 class LoginPage extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
-        let username = this.props.form.getFieldsValue().username
-        let password = this.props.form.getFieldsValue().password
-        if (username === '123' && password === '123') {
-            // 表单的路由处理
-            history.push('/index/music')
-        } else {
-            notification.open({
-                message: '用户名&密码',
-                description: '都是：123',
-                duration: 2,
-                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
-            })
+        let data = {
+            username: this.props.form.getFieldsValue().username,
+            password: this.props.form.getFieldsValue().password
         }
+        this.props.dispatch(loginHandler(data))
     }
-
     render() {
         const { getFieldDecorator } = this.props.form
         return (
@@ -36,7 +27,7 @@ class LoginPage extends React.Component {
                                     rules: [{ required: true, message: '请输入用户名' }],
                                 })(
                                     <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                           placeholder="Username：123" />
+                                           placeholder="账号" />
                                 )}
                             </FormItem>
                             <FormItem>
@@ -44,7 +35,7 @@ class LoginPage extends React.Component {
                                     rules: [{ required: true, message: '请输入密码' }],
                                 })(
                                     <Input  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                            type="password" placeholder="Password：123" />
+                                            type="password" placeholder="密码" />
                                 )}
                             </FormItem>
                             <FormItem>
@@ -67,6 +58,6 @@ class LoginPage extends React.Component {
         )
     }
 }
-
 let Login = Form.create()(LoginPage)
-export default Login
+//连接state与当前组件的props,是props载入store的dispath方法
+export default connect()(Login)

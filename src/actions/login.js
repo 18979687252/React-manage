@@ -1,29 +1,34 @@
+import {httpPost} from '../utils/http'
+import {loginUrl} from '../utils/api'
+import { notification} from 'antd'
+import {createAction} from 'redux-actions'
+import createHistory from 'history/createHashHistory'
+let history = createHistory()
+//redux-actions创建action
+export const loginAction = createAction('LOGIN')
 
-export const LOGINMODAL_SHOW = "LOGINMODAL_SHOW"
-
-//验证
-export function UserValid(data){
-    return function (dispatch){
-        // Ajax.getAjax("http://localhost:3000/user?username="+data.username+"&password="+data.password,function(response){
-        //     if(response.data.length > 0){
-        //         hashHistory.push("/user")
-        //         //将登录状态使用本地存储的方式存起来以便验证是否登录
-        //         localStorage.setItem("username", data.username);
-        //     } else {
-        //         notification.error({
-        //             message: '登录失败',
-        //             description: `用户名或密码错误，请重新登录！！！`,
-        //             duration: 2,
-        //         });
-        //     }
-        // });
+export const loginHandler = (data) => {
+    return (dispatch) => {
+        httpPost(loginUrl,data,(res) => {
+            if(res.data.token){
+                notification.success({
+                    message: '成功',
+                    description: `登录成功`,
+                    duration: 2,//设置显示时间
+                })
+                //对action载入payload参数
+                dispatch(loginAction(data))
+                window.sessionStorage.setItem('token',res.data.token)
+                window.sessionStorage.setItem('username',data.username)
+                history.push('/index/music')
+            }else{
+                notification.success({
+                    message: '失败',
+                    description: res.data.msg,
+                })
+            }
+        })
     }
 }
 
-//点击登录时控制弹出框的显示与隐藏,将状态值保存至display中
-export function showLoginModal(display){
-    return{
-        type:LOGINMODAL_SHOW,
-        display
-    }
-}
+

@@ -6,25 +6,22 @@ import './top.less'
 const SubMenu = Menu.SubMenu
 const { Header } = Layout
 
-export default class Top extends React.Component {
+class Top extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             username: ''
         }
     }
-    componentDidMount() {
-        this.getUser()
-    }
-
-    getUser = () => {
+    componentWillMount () {
+        let username = window.sessionStorage.getItem('username')
         this.setState({
-            username: 'Admin'
+            username:username
         })
     }
-    clear = (item) => {
+    menuClickHandler = (item) => {
         if (item.key === 'logOut') {
-            this.props.clear()
+           window.sessionStorage.clear()
         }
     }
     render() {
@@ -35,7 +32,7 @@ export default class Top extends React.Component {
                     type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.props.toggle}
                 />
-                <Menu mode="horizontal" className="logOut" onClick={this.clear}>
+                <Menu mode="horizontal" className="logOut" onClick={this.menuClickHandler}>
                     <SubMenu title={<span><Icon type="user" />{ this.state.username }</span>} >
                         <Menu.Item key="logOut">
                             <Link to="/login" >退出</Link>
@@ -46,3 +43,5 @@ export default class Top extends React.Component {
         )
     }
 }
+
+export default Top

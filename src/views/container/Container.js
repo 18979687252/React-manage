@@ -3,6 +3,7 @@ import { Layout, Menu, Icon } from 'antd';
 import {Link} from 'react-router-dom'
 import Contents from './content/contents'
 import Top from './header/Top'
+import Bottom from './footer/Bottom'
 import {homeSliderMenu} from '../../utils/homeSliderMenu'
 import './container.less'
 const { Sider } = Layout
@@ -69,6 +70,7 @@ export default class Container extends React.Component {
                 <Layout>
                     <Top toggle={this.toggle} collapsed={this.state.collapsed}></Top>
                     <Contents style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}></Contents>
+                    <Bottom/>
                 </Layout>
             </Layout>
         );

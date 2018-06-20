@@ -6,6 +6,4 @@ const enhancer = compose(
     applyMiddleware(thunk)
 )
 
-export default function configureStore(initialstate) {
-    return createStore(rootReducer, initialstate, enhancer)
-}
+export default createStore(rootReducer, enhancer)

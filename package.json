@@ -93,12 +93,20 @@
   },
   "devDependencies": {
     "antd": "^3.5.2",
+    "axios": "^0.18.0",
     "history": "^4.7.2",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
+    "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0"
+  },
+  "proxy": {
+    "/ccts": {
+      "target": "http://192.168.1.162:9992",
+      "ws": true
+    }
   }
 }

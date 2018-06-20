@@ -2,14 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from "react-redux"
 import routes from './router/router'
-import configureStore from './store/store'
+import store from './store'
 import './index.less'
 
-const store = configureStore()
 ReactDOM.render(
     <Provider store={store}>
-        <div>
+        <div className="root-content-wrapper">
             {routes}
         </div>
     </Provider>,
-    document.getElementById('root'))
+    document.getElementById('root')
+)

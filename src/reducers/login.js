@@ -1,13 +1,12 @@
-//例子
-import { LOGINMODAL_SHOW } from '../actions/login'
-let init={
-    display:false
-};
-export default function user(state=init,action){
-    switch(action.type){
-        case LOGINMODAL_SHOW:
-            return Object.assign({},state,{display:action.display});
-        default :
-            return state;
-    }
+import { handleActions } from 'redux-actions'
+const initLoginInfo = {
+    username: '默认账号'
 }
+export const login = handleActions({
+    'LOGIN'(state, action) {
+        //console.log(state,action)
+        return {
+            loginInfo: action.payload
+        }
+    }
+},initLoginInfo)
