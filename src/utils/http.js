@@ -1,20 +1,18 @@
-//本文件用于ajax封装，避免每次发ajax时代码重复率高
+//本文件用于ajax封装，避免代码重复率高
 import { notification,Modal } from 'antd'
-import axios from 'axios';
-const confirm = Modal.confirm;
+import axios from './interceptors'
 
 //axios post方式
 export function httpPost(url,data,successCallback){
     axios.post(url,data).then(function (response) {
         successCallback(response)
     }).catch(function (error) {
-        console.log(error)
         notification.error({
             message: '请求有误',
             description: `访问异常，请稍后再试`,
             duration: 2,
-        });
-    });
+        })
+    })
 }
 
 //axios put方式
@@ -26,8 +24,8 @@ export function httpPut(url,data,successCallback){
             message: '请求有误',
             description: `访问异常，请稍后再试`,
             duration: 2,
-        });
-    });
+        })
+    })
 
 }
 
@@ -41,7 +39,7 @@ export function httpGet(url,successCallback){
 
 //axios delete方式
 export function httpDelete(url,successCallback){
-    confirm({
+    Modal.confirm({
         title: '提示',
         content: '确认删除吗？',
         onOk() {

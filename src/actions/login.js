@@ -10,7 +10,7 @@ export const loginAction = createAction('LOGIN')
 export const loginHandler = (data) => {
     return (dispatch) => {
         httpPost(loginUrl,data,(res) => {
-            if(res.data.token){
+            if(res.token){
                 notification.success({
                     message: '成功',
                     description: `登录成功`,
@@ -18,13 +18,13 @@ export const loginHandler = (data) => {
                 })
                 //对action载入payload参数
                 dispatch(loginAction(data))
-                window.sessionStorage.setItem('token',res.data.token)
+                window.sessionStorage.setItem('token',res.token)
                 window.sessionStorage.setItem('username',data.username)
                 history.push('/index/music')
             }else{
                 notification.success({
                     message: '失败',
-                    description: res.data.msg,
+                    description: res.message,
                 })
             }
         })

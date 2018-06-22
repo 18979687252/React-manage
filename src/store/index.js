@@ -5,5 +5,4 @@ import thunk from 'redux-thunk'
 const enhancer = compose(
     applyMiddleware(thunk)
 )
-
 export default createStore(rootReducer, enhancer)

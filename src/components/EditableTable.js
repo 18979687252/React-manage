@@ -1,7 +1,8 @@
 import React from 'react'
-import {Table, Input, InputNumber, Popconfirm, Form} from 'antd';
-
-const data = [];
+import {Table, Input, InputNumber, Popconfirm, Form} from 'antd'
+const FormItem = Form.Item
+//表格数据
+const data = []
 for (let i = 0; i < 100; i++) {
     data.push({
         key: i.toString(),
@@ -10,8 +11,8 @@ for (let i = 0; i < 100; i++) {
         address: `London Park no. ${i}`,
     });
 }
-const FormItem = Form.Item;
-const EditableContext = React.createContext();
+
+const EditableContext = React.createContext()
 
 const EditableRow = ({form, index, ...props}) => (
     <EditableContext.Provider value={form}>
@@ -99,8 +100,8 @@ class EditableTable extends React.Component {
                                   <EditableContext.Consumer>
                                     {form => (
                                         <a href="javascript:;"
-                                            onClick={() => this.save(form, record.key)}
-                                            style={{marginRight: 8}}>
+                                           onClick={() => this.save(form, record.key)}
+                                           style={{marginRight: 8}}>
                                             保存
                                         </a>
                                     )}
@@ -189,14 +190,4 @@ class EditableTable extends React.Component {
         );
     }
 }
-
-export default class Account extends React.Component {
-    render() {
-        return (
-            <div>
-                <h2>账号</h2>
-                <EditableTable/>
-            </div>
-        )
-    }
-}
+export default EditableTable

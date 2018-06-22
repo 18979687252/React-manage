@@ -1,6 +1,6 @@
-import {combineReducers} from "redux";
-import {login} from "./login";
-var rootReducer=combineReducers({
-    login
+import {combineReducers} from "redux"
+import {account} from "./account"
+var rootReducer = combineReducers({
+    account
 });
 export default rootReducer;
