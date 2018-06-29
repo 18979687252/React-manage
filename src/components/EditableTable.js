@@ -1,27 +1,17 @@
 import React from 'react'
 import {Table, Input, InputNumber, Popconfirm, Form} from 'antd'
+
 const FormItem = Form.Item
-//表格数据
-const data = []
-for (let i = 0; i < 100; i++) {
-    data.push({
-        key: i.toString(),
-        name: `Edrward ${i}`,
-        age: 32,
-        address: `London Park no. ${i}`,
-    });
-}
-
+//表格行组件
 const EditableContext = React.createContext()
-
 const EditableRow = ({form, index, ...props}) => (
     <EditableContext.Provider value={form}>
         <tr {...props} />
     </EditableContext.Provider>
 );
-
 const EditableFormRow = Form.create()(EditableRow);
 
+//编辑单元组件
 class EditableCell extends React.Component {
     getInput = () => {
         if (this.props.inputType === 'number') {
@@ -29,6 +19,7 @@ class EditableCell extends React.Component {
         }
         return <Input/>;
     };
+
     render() {
         const {
             editing,
@@ -50,7 +41,7 @@ class EditableCell extends React.Component {
                                     {getFieldDecorator(dataIndex, {
                                         rules: [{
                                             required: true,
-                                            message: `Please Input ${title}!`,
+                                            message: `请输入 ${title}!`,
                                         }],
                                         initialValue: record[dataIndex],
                                     })(this.getInput())}
@@ -67,40 +58,23 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {data, editingKey: ''};
+        this.state = {editingKey: ''};
         this.columns = [
-            {
-                title: '姓名',
-                dataIndex: 'name',
-                width: '25%',
-                editable: true,
-            },
-            {
-                title: '年龄',
-                dataIndex: 'age',
-                width: '15%',
-                editable: true,
-            },
-            {
-                title: '地址',
-                dataIndex: 'address',
-                width: '40%',
-                editable: true,
-            },
             {
                 title: '操作',
                 dataIndex: 'operation',
+                align:'center',
+                width:140,
                 render: (text, record) => {
                     const editable = this.isEditing(record);
                     return (
                         <div>
-                            <a style={{marginRight:8}}>删除</a>
+                            <a style={{marginRight: 8}} onClick={() => this.deleteAction(record)}>删除</a>
                             {editable ? (
                                 <span>
                                   <EditableContext.Consumer>
                                     {form => (
-                                        <a href="javascript:;"
-                                           onClick={() => this.save(form, record.key)}
+                                        <a onClick={() => this.save(form, record.id)}
                                            style={{marginRight: 8}}>
                                             保存
                                         </a>
@@ -108,12 +82,14 @@ class EditableTable extends React.Component {
                                   </EditableContext.Consumer>
                                   <Popconfirm
                                       title="确定要取消吗?"
-                                      onConfirm={() => this.cancel(record.key)}>
+                                      okText="确定"
+                                      cancelText="取消"
+                                      onConfirm={() => this.cancel(record.id)}>
                                     <a>取消</a>
                                   </Popconfirm>
                                 </span>
                             ) : (
-                                <a onClick={() => this.edit(record.key)}>编辑</a>
+                                <a onClick={() => this.edit(record.id)}>编辑</a>
                             )}
                         </div>
                     );
@@ -121,36 +97,25 @@ class EditableTable extends React.Component {
             },
         ];
     }
-
     isEditing = (record) => {
-        return record.key === this.state.editingKey;
-    };
-
-    edit(key) {
-        this.setState({editingKey: key});
+        return record.id === this.state.editingKey;
     }
-
-    save(form, key) {
+    deleteAction(record){
+        this.props.deleteAction(record)
+    }
+    edit(id) {
+        this.setState({editingKey: id});
+    }
+    save(form, id) {
         form.validateFields((error, row) => {
             if (error) {
                 return;
             }
-            const newData = [...this.state.data];
-            const index = newData.findIndex(item => key === item.key);
-            if (index > -1) {
-                const item = newData[index];
-                newData.splice(index, 1, {
-                    ...item,
-                    ...row,
-                });
-                this.setState({data: newData, editingKey: ''});
-            } else {
-                newData.push(data);
-                this.setState({data: newData, editingKey: ''});
-            }
+            //console.log(form, row, id)
+            this.setState({editingKey: ''})
+            this.props.updateAction(row)
         });
     }
-
     cancel = () => {
         this.setState({editingKey: ''});
     };
@@ -162,8 +127,8 @@ class EditableTable extends React.Component {
                 cell: EditableCell,
             },
         };
-
-        const columns = this.columns.map((col) => {
+        const tempColumns = [...this.props.columns,...this.columns]
+        const columns = tempColumns.map((col) => {
             if (!col.editable) {
                 return col;
             }
@@ -171,23 +136,27 @@ class EditableTable extends React.Component {
                 ...col,
                 onCell: record => ({
                     record,
-                    inputType: col.dataIndex === 'age' ? 'number' : 'text',
+                    inputType: col.dataType === 'number' ? 'number' : 'text',
                     dataIndex: col.dataIndex,
                     title: col.title,
                     editing: this.isEditing(record),
                 }),
             };
         });
-
         return (
             <Table
                 components={components}
+                pagination={this.props.paginationParams.total > 10 ? this.props.paginationParams : false}
                 bordered
-                dataSource={this.state.data}
+                rowKey="id"
+                size="middle"
+                dataSource={this.props.data}
                 columns={columns}
+                onChange={this.props.tableChange}
                 rowClassName="editable-row"
             />
         );
     }
 }
+
 export default EditableTable

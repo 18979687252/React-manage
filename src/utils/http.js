@@ -1,5 +1,5 @@
 //本文件用于ajax封装，避免代码重复率高
-import { notification,Modal } from 'antd'
+import { message,Modal } from 'antd'
 import axios from './interceptors'
 
 //axios post方式
@@ -7,11 +7,7 @@ export function httpPost(url,data,successCallback){
     axios.post(url,data).then(function (response) {
         successCallback(response)
     }).catch(function (error) {
-        notification.error({
-            message: '请求有误',
-            description: `访问异常，请稍后再试`,
-            duration: 2,
-        })
+        message.error("网络异常，请稍后再试")
     })
 }
 
@@ -20,21 +16,18 @@ export function httpPut(url,data,successCallback){
     axios.put(url,data).then(function (response) {
         successCallback(response)
     }).catch(function (error) {
-        notification.error({
-            message: '请求有误',
-            description: `访问异常，请稍后再试`,
-            duration: 2,
-        })
+        message.error("网络异常，请稍后再试")
     })
 
 }
 
 //axios get方式
 export function httpGet(url,successCallback){
-    axios.get(url)
-        .then(function (response) {
+    axios.get(url).then(function (response) {
             successCallback(response)
-        })
+        }).catch(function (error) {
+        message.error("网络异常，请稍后再试")
+    })
 }
 
 //axios delete方式
@@ -46,18 +39,9 @@ export function httpDelete(url,successCallback){
             axios.delete(url)
                 .then(function (response) {
                     successCallback(response);
-                    notification.success({
-                        message: '成功',
-                        description: `删除成功`,
-                        duration: 2,
-                    });
                 })
                 .catch(function (error) {
-                    notification.error({
-                        message: '失败',
-                        description: `删除失败，请稍后重试`,
-                        duration: 2,
-                    });
+                    message.error("网络异常，请稍后再试")
                 });
         },
         onCancel() {

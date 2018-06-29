@@ -1,11 +1,15 @@
+//使用方法：1、 正在使用的方法，import axios 拦截后export axios；
+//         2、直接在入口文件index.js内引入拦截器；
 import createHistory from 'history/createHashHistory'
 import {Modal } from 'antd'
 import axios from 'axios'
 let history = createHistory()
-let token = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
+
 // req拦截
 axios.interceptors.request.use(
     config => {
+        let token = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
+        //console.log('token:' + token)
         if (token) {  //判断是否存在token，如果存在的话，则每个http header都加上token
             config.headers['X-Authorization'] = 'Bearer ' + token
         }
