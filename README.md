@@ -1,17 +1,17 @@
 ## ReactManager
 -------------------------------------------------------------------------------------------------
-> react全家桶后台管理系统
+>> react全家桶后台管理系统
 
 ### 项目介绍
 ------------------------------------------------------------------------------------------------
-> 1. 项目构建：create-react-app；
-> 2. UI: Ant Design；
-> 3. css: less；
-> 4. 状态管理：react-redux；
-> 5. 异步action中间件：redux-thank；
-> 6. action生成：redux-actions；
-> 7. 数据请求：axios；
-> 8. 路由：react-router-dom;
+>> 1. 项目构建：create-react-app；
+>> 2. UI: Ant Design；
+>> 3. css: less；
+>> 4. 状态管理：react-redux；
+>> 5. 异步action中间件：redux-thank；
+>> 6. action生成：redux-actions；
+>> 7. 数据请求：axios；
+>> 8. 路由：react-router-dom;
 
 ### Usage
 -------------------------------------------------------------------------------------------------
