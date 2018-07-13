@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from "react-redux"
+import { Route, Redirect, HashRouter} from 'react-router-dom'
 import routes from './router/router'
 import store from './store'
 import './index.less'
@@ -9,7 +10,13 @@ import './index.less'
 ReactDOM.render(
     <Provider store={store}>
         <div className="root-content-wrapper">
-            {routes}
+            <HashRouter>
+                <div className="route-wrapper">
+                    <Route exact  path="/" render={() => <Redirect to="/login"/>}/>
+                    <Route  path="/index" component={routes.Home} />
+                    <Route  path="/login" component={routes.Login} />
+                </div>
+            </HashRouter>
         </div>
     </Provider>,
     document.getElementById('root')
@@ -30,5 +37,4 @@ ReactDOM.render(
         changeActive:(args)=>dispatch({type:"changeTable",data:args})
     }
   }
-
 */
